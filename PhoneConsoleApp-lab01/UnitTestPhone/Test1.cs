@@ -45,7 +45,37 @@ namespace UnitTestPhone
             var phone = new Phone(wlasciciel, numerTelefonu);
         }
 
+        // Test 4: Sprawdza, czy metoda AddContact dodaje kontakt poprawnie
+        [TestMethod]
+        public void Test_AddContact_PoprawneDodanie()
+        {
+            ///AAA
+            ///Arrange
+            var phone = new Phone("Butenko", "123456789");
 
+            ///Act
+            var result = phone.AddContact("Jan", "987654321");
+
+            ///Assert
+            Assert.IsTrue(result);
+            Assert.AreEqual(1, phone.Count);
+        }
+
+        /// Test 5 **Sprawdza, czy metoda AddContact rzuca wyjątek, gdy książka telefoniczna jest pełna.**
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Test_AddContact_ksiazka_pelna()
+        {
+            ///AAA
+            ///Arrange
+            var phone = new Phone("Butenko", "123456789");
+            for (int i = 0; i < phone.PhoneBookCapacity; i++)
+            {
+                phone.AddContact($"Kontakt{i}", $"12345678{i % 10}");
+            }
+            ///act
+            phone.AddContact("Nowy Kontakt", "987654321");
+        }
 
     }
 }
